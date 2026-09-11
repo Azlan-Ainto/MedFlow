@@ -18,9 +18,9 @@ public class Patient
 
     public Patient(string vorname,string nachname,DateOnly geburtsdatum,string versichertennummer)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace("Der Vorname darf nicht leer sein.", nameof(vorname));
-        ArgumentException.ThrowIfNullOrWhiteSpace("Der Nachname darf nicht leer sein.",nameof(nachname));
-        ArgumentException.ThrowIfNullOrWhiteSpace("Die Versichertennummer darf nicht leer sein.",nameof(versichertennummer));
+        ArgumentException.ThrowIfNullOrWhiteSpace(vorname);
+        ArgumentException.ThrowIfNullOrWhiteSpace(nachname);
+        ArgumentException.ThrowIfNullOrWhiteSpace(versichertennummer);
 
         Vorname = vorname;
         Nachname = nachname;
