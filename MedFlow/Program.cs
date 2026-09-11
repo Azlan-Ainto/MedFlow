@@ -1,10 +1,9 @@
-﻿namespace MedFlow
+﻿namespace MedFlow;
+public class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
-        }
+        Patient patient = new("Max","Mustermann", new DateOnly(1985,3,14),"A123456789");
+        Console.WriteLine(patient);
     }
 }
