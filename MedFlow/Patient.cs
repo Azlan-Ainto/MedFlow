@@ -1,16 +1,15 @@
 ﻿namespace MedFlow;
-
 public class Patient
 {
     private DateOnly _geburtsdatum;
-    public string Vorname { get; set; }
-    public string Nachname { get; set; }
-    public string Versichertennummer { get; set; }
+    public string Vorname { get;  private set; }
+    public string Nachname { get; private set; }
+    public string Versichertennummer { get; private set; }
 
     public DateOnly Geburtsdatum
     {
         get => _geburtsdatum;
-        set
+        private set
         {
             GeburtsdatumValidieren(value);
             _geburtsdatum = value;
@@ -19,9 +18,9 @@ public class Patient
 
     public Patient(string vorname,string nachname,DateOnly geburtsdatum,string versichertennummer)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(vorname,"Der Vorname darf nicht leer sein.");
-        ArgumentException.ThrowIfNullOrWhiteSpace(nachname,"Der Nachname darf nicht leer sein.");
-        ArgumentException.ThrowIfNullOrWhiteSpace(versichertennummer,"Die Versichertennummer darf nicht leer sein.");
+        ArgumentException.ThrowIfNullOrWhiteSpace("Der Vorname darf nicht leer sein.", nameof(vorname));
+        ArgumentException.ThrowIfNullOrWhiteSpace("Der Nachname darf nicht leer sein.",nameof(nachname));
+        ArgumentException.ThrowIfNullOrWhiteSpace("Die Versichertennummer darf nicht leer sein.",nameof(versichertennummer));
 
         Vorname = vorname;
         Nachname = nachname;
