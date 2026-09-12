@@ -2,7 +2,7 @@
 public class Patient
 {
     private DateOnly _geburtsdatum;
-    public string Vorname { get;  private set; }
+    public string Vorname{get; private set;}
     public string Nachname { get; private set; }
     public string Versichertennummer { get; private set; }
 
@@ -18,9 +18,9 @@ public class Patient
 
     public Patient(string vorname,string nachname,DateOnly geburtsdatum,string versichertennummer)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(vorname);
-        ArgumentException.ThrowIfNullOrWhiteSpace(nachname);
-        ArgumentException.ThrowIfNullOrWhiteSpace(versichertennummer);
+        ArgumentException.ThrowIfNullOrEmpty(vorname);
+        ArgumentException.ThrowIfNullOrEmpty(nachname);
+        ArgumentException.ThrowIfNullOrEmpty(versichertennummer);
 
         Vorname = vorname;
         Nachname = nachname;

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="MedFlow.Tests/MedFlow.Tests.csproj" Id="fea68dac-dd77-45b0-bf10-8cde49cc752e" />
   <Project Path="MedFlow/MedFlow.csproj" />
 </Solution>
