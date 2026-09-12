@@ -19,9 +19,9 @@ public class Patient
 
     public Patient(string vorname, string nachname, DateOnly geburtsdatum, string versichertennummer)
     {
-        ArgumentNullException.ThrowIfNullOrWhiteSpace(vorname);
-        ArgumentNullException.ThrowIfNullOrWhiteSpace(nachname);
-        ArgumentNullException.ThrowIfNullOrWhiteSpace(versichertennummer);
+        ArgumentException.ThrowIfNullOrWhiteSpace(vorname);
+        ArgumentException.ThrowIfNullOrWhiteSpace(nachname);
+        ArgumentException.ThrowIfNullOrWhiteSpace(versichertennummer);
 
         Vorname = vorname;
         Nachname = nachname;
