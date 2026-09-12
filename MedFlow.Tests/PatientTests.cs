@@ -15,13 +15,13 @@ public class PatientTests
     [Fact]
     public void Konstruktor_MitLeeremVornamen_WirftArgumentException()
     {
-        Assert.ThrowsAny<ArgumentException>(() => new Patient("", "Min", new DateOnly(1985, 3, 14), "A12"));
+        Assert.Throws<ArgumentException>(() => new Patient("", "Min", new DateOnly(1985, 3, 14), "A12"));
     }
 
     [Fact]
     public void Konstruktor_MitLeererVersichertennummer_WirftArgumentException()
     {
-        Assert.ThrowsAny<ArgumentException>(() => new Patient("Max", "Min", new DateOnly(1985, 3, 14), ""));
+        Assert.Throws<ArgumentException>(() => new Patient("Max", "Min", new DateOnly(1985, 3, 14), ""));
     }
 
     [Fact]
@@ -33,7 +33,12 @@ public class PatientTests
     [Fact]
     public void Konstruktor_MitLeeremNachnamen_WirftArgumentException()
     {
-        Assert.ThrowsAny<ArgumentException>(() => new Patient("Max", "", new DateOnly(1985, 3, 14), "A12"));
+        Assert.Throws<ArgumentException>(() => new Patient("Max", "", new DateOnly(1985, 3, 14), "A12"));
+    }
+    [Fact]
+    public void Konstruktor_MitNurLeerzeichenImVornamen_WirftArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => new Patient("   ", "Min", new DateOnly(1985, 3, 14), "A12"));
     }
 }
 
