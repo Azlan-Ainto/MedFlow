@@ -15,19 +15,25 @@ public class PatientTests
     [Fact]
     public void Konstruktor_MitLeeremVornamen_WirftArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => new Patient("", "Min", new DateOnly(1985, 3, 14), "A12"));
+        Assert.ThrowsAny<ArgumentNullException>(() => new Patient("", "Min", new DateOnly(1985, 3, 14), "A12"));
     }
 
     [Fact]
     public void Konstruktor_MitLeererVersichertennummer_WirftArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => new Patient("Max", "Min", new DateOnly(1985, 3, 14), ""));
+        Assert.ThrowsAny<ArgumentNullException>(() => new Patient("Max", "Min", new DateOnly(1985, 3, 14), ""));
     }
 
     [Fact]
     public void Konstruktor_MitGeburtsdatumInDerZukunft_WirftArgumentOutOfRangeException()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new Patient("Max", "Min", new DateOnly(2027, 3, 14), "A12"));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Patient("Max", "Min", DateOnly.FromDateTime(DateTime.Today).AddDays(1), "A12"));
+    }
+
+    [Fact]
+    public void Konstruktor_MitLeeremNachnamen_WirftArgumentException()
+    {
+        Assert.ThrowsAny<ArgumentNullException>(() => new Patient("Max", "", new DateOnly(1985, 3, 14), "A12");
     }
 }
 
