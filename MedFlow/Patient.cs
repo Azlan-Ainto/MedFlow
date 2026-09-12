@@ -1,8 +1,9 @@
 ﻿namespace MedFlow;
+
 public class Patient
 {
     private DateOnly _geburtsdatum;
-    public string Vorname{get; private set;}
+    public string Vorname { get; private set; }
     public string Nachname { get; private set; }
     public string Versichertennummer { get; private set; }
 
@@ -16,7 +17,7 @@ public class Patient
         }
     }
 
-    public Patient(string vorname,string nachname,DateOnly geburtsdatum,string versichertennummer)
+    public Patient(string vorname, string nachname, DateOnly geburtsdatum, string versichertennummer)
     {
         ArgumentException.ThrowIfNullOrEmpty(vorname);
         ArgumentException.ThrowIfNullOrEmpty(nachname);
@@ -34,7 +35,7 @@ public class Patient
 
         if (geburtsdatum > heute)
         {
-            throw new ArgumentOutOfRangeException(nameof(geburtsdatum),geburtsdatum,"Das Geburtsdatum darf nicht in der Zukunft liegen.");
+            throw new ArgumentOutOfRangeException(nameof(geburtsdatum), geburtsdatum, "Das Geburtsdatum darf nicht in der Zukunft liegen.");
         }
     }
 

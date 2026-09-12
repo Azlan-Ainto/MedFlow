@@ -13,8 +13,8 @@ public class Program
             Console.WriteLine("2) Alle Patienten anzeigen");
             Console.WriteLine("0) Beenden");
             Console.WriteLine("Auswahl:");
-            string? auswah = Console.ReadLine();
-            switch (auswah)
+            string? auswahl = Console.ReadLine();
+            switch (auswahl)
             {
                 case "1":
                     PatientAnlegen(patientenverwaltung);
@@ -26,7 +26,7 @@ public class Program
 
                     Console.WriteLine("Programm wird beendet.");
                     weiter = false;
-                    return;
+                    break;
                 default:
                     Console.WriteLine("Ungültige Auswahl.");
                     break;
@@ -64,13 +64,15 @@ public class Program
 
             if (!DateOnly.TryParse(eingabe, out patientGeburtsdatum))
             {
-                Console.WriteLine("Ungültiges Datumsformat.");
+                Console.WriteLine("Ungültiges Datumsformat oder kein Geburtsdatum angegeben.\n" +
+                    "Geben Sie bitte ein der folgenden Datumsformat an:\n" +
+                    "[dd.MM.yyy] oder [dd/MM/yyyy] oder [dd-MM-yyyy] an");
                 continue;
             }
 
             try
             {
-                Patient neuerPatient = new(vorname,nachname,patientGeburtsdatum,versichertennummer);
+                Patient neuerPatient = new(vorname, nachname, patientGeburtsdatum, versichertennummer);
                 patientenverwaltung.Anlegen(neuerPatient);
                 Console.WriteLine("Patient wurde erfolgreich angelegt.");
                 break;
@@ -81,13 +83,14 @@ public class Program
                 Console.WriteLine("Bitte geben Sie ein gültiges Geburtsdatum ein.");
             }
         }
-      }       
-    
+    }
+
     private static void AllePatientenAnzeigen(Patientenverwaltung patientenverwaltung)
     {
         if (patientenverwaltung.AlleAbrufen().Count == 0)
         {
             Console.WriteLine("die Patientenliste ist leer.");
+            return;
         }
 
         foreach (var patient in patientenverwaltung.AlleAbrufen())
