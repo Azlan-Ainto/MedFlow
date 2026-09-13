@@ -1,15 +1,14 @@
-﻿
-namespace MedFlow.Tests;
+﻿namespace MedFlow.Tests;
 
 public class PatientenverwaltungTests
 {
     [Fact]
     public void Anlegen_MitNull_WirftArgumentNullException()
     {
-        var patientveraltung = new Patientenverwaltung();
+        var patientverwaltung = new Patientenverwaltung();
         Patient? patient = null;
-        patientveraltung.Anlegen(patient);
-
+        Assert.Throws<ArgumentNullException>(() => patientverwaltung.Anlegen(patient));
+      
     }
 
     [Fact]
