@@ -8,10 +8,15 @@ public class Program
         bool weiter = true;
         while (weiter)
         {
-            Console.WriteLine("\n=== MedFlow ===");
+            Console.WriteLine("\n================================================================");
+            Console.WriteLine("*** MedFlow - Ihr CRM Profi für die Verwaltung von Patienten ***");
+            Console.WriteLine("=================================================================");
+            Console.WriteLine();
+
             Console.WriteLine("1) Patient anlegen");
             Console.WriteLine("2) Alle Patienten anzeigen");
             Console.WriteLine("0) Beenden");
+            Console.WriteLine();
             Console.WriteLine("Auswahl:");
             string? auswahl = Console.ReadLine();
             switch (auswahl)
@@ -51,24 +56,6 @@ public class Program
         return eingabe;
     }
 
-    private static DateOnly GeburtsdatumFordern()
-    {
-        while (true)
-        {
-            string eingabe = EingabeFordern("Geburtsdatum");
-
-            if (DateOnly.TryParse(eingabe, out DateOnly geburtsdatum))
-            {
-                return geburtsdatum;
-            }
-
-            Console.WriteLine(
-                "Ungültiges Datumsformat oder kein Geburtsdatum angegeben.\n" +
-                "Bitte geben Sie das Datum in einem der folgenden Formate ein:\n" +
-                "[dd.MM.yyyy] oder [dd/MM/yyyy] oder [dd-MM-yyyy]");
-        }
-    }
-
     private static string VornameFordern()
     {
         while (true)
@@ -81,22 +68,61 @@ public class Program
             Console.WriteLine("Der Vorname darf nur aus Buchstaben bestehen");
         }
     }
-    
+
     private static string NachnameFordern()
     {
         while (true)
         {
             string nachname = EingabeFordern("Nachname");
-            if(nachname.All(char.IsLetter))            
+            if (nachname.All(char.IsLetter))
                 return nachname;
             Console.WriteLine("Der Nachname darf nur Buchstabe bestehen.");
-            
+
         }
+    }
+
+    private static DateOnly GeburtsdatumFordern()
+    {
+        string[] erlaubteFormate =
+        {
+            "dd.MM.yyyy", 
+            "dd/MM/yyyy"
+        };
+
+        while(true)
+        {
+            string geburtsdatumEingabe = EingabeFordern("Geburtsdatum");
+
+            bool istGeburtsdatumsformatRichtig = DateOnly.TryParseExact(
+                geburtsdatumEingabe,
+                erlaubteFormate,
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out DateOnly geburtsdatum
+             );
+
+            if (istGeburtsdatumsformatRichtig)
+
+                return geburtsdatum;
+
+            Console.WriteLine("Ungültiges Geburtsdatum.\n" +
+                              $"Erlaubte Formate:" +
+                              $"{erlaubteFormate[0]}, " +
+                              $"{erlaubteFormate[1]}, " +
+                              $"Beispiele:" +
+                              $" 02.12.1986, " +
+                              $"02/12/1986");
+        }
+       
     }
 
     private static void PatientAnlegen(Patientenverwaltung patientenverwaltung)
     {
-        Console.WriteLine("\n--- Patient anlegen ---");
+
+        Console.WriteLine("*************************");
+        Console.WriteLine("*** Patient anlegen ****");
+        Console.WriteLine("**************************");
+        Console.WriteLine();
         string vorname = VornameFordern();
         string nachname = NachnameFordern();
         string versichertennummer = EingabeFordern("Versichertennummer");
@@ -131,6 +157,9 @@ public class Program
 
     private static void AllePatientenAnzeigen(Patientenverwaltung patientenverwaltung)
     {
+        Console.WriteLine("********************************************************");
+        Console.WriteLine("*** In der Datenbank exisiteren folgende Patienten: ***");
+        Console.WriteLine("*********************************************************");
         if (patientenverwaltung.AlleAbrufen().Count == 0)
         {
             Console.WriteLine("die Patientenliste ist leer.");
@@ -139,7 +168,7 @@ public class Program
 
         foreach (var patient in patientenverwaltung.AlleAbrufen())
         {
-            Console.WriteLine(patient);
+            Console.WriteLine("\n"+patient);
         }
     }
 }
