@@ -39,6 +39,10 @@ public class Program
         }
     }
 
+    private static bool IstGueltigerName(string name)
+    {
+        return !string.IsNullOrWhiteSpace(name)  && name.All(c => char.IsLetter(c)  || c == ' ' || c == '-' || c == '\'');
+    }
 
     private static string EingabeFordern(string feldname)
     {
@@ -61,7 +65,7 @@ public class Program
         while (true)
         {
             string vorname = EingabeFordern("Vorname");
-            if (vorname.All(char.IsLetter))
+            if (IstGueltigerName(vorname))
             {
                 return vorname;
             }
@@ -74,7 +78,7 @@ public class Program
         while (true)
         {
             string nachname = EingabeFordern("Nachname");
-            if (nachname.All(char.IsLetter))
+            if (IstGueltigerName(nachname))
                 return nachname;
             Console.WriteLine("Der Nachname darf nur Buchstabe bestehen.");
 
@@ -104,6 +108,7 @@ public class Program
             if (istGeburtsdatumsformatRichtig)
 
                 return geburtsdatum;
+            Console.WriteLine($"Erlaubte Formate: {erlaubteFormate[0]}, {erlaubteFormate[1]}");
         }
     }
 
@@ -123,7 +128,7 @@ public class Program
         {
             Patient neuerPatient = new(vorname, nachname, geburtsdatum, versichertennummer);
 
-            var istPatientRichtigErstellt = patientenverwaltung.Anlegen(neuerPatient);
+            var istPatientRichtigErstellt = patientenverwaltung.TryAnlegen(neuerPatient);
             if (istPatientRichtigErstellt)
             {
                 Console.WriteLine("Patient wurde erfolgreich angelegt.");
