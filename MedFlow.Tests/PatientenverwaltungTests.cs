@@ -7,8 +7,7 @@ public class PatientenverwaltungTests
     public void Anlegen_MitNull_WirftArgumentNullException()
     {
         var patientverwaltung = new Patientenverwaltung();
-        Patient? patient = null;
-        Assert.Throws<ArgumentNullException>(() => patientverwaltung.TryAnlegen(patient));
+        Assert.Throws<ArgumentNullException>(() => patientverwaltung.TryAnlegen(null!));
 
     }
 
