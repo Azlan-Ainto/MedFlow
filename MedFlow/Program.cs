@@ -34,6 +34,7 @@ public class Program
         }
     }
 
+
     private static string EingabeFordern(string feldname)
     {
         string? eingabe;
@@ -49,40 +50,83 @@ public class Program
 
         return eingabe;
     }
-    private static void PatientAnlegen(Patientenverwaltung patientenverwaltung)
+
+    private static DateOnly GeburtsdatumFordern()
     {
-        Console.WriteLine("\n--- Patient anlegen ---");
-        string vorname = EingabeFordern("Vorname");
-        string nachname = EingabeFordern("Nachname");
-        string versichertennummer = EingabeFordern("Versichertennummer");
-
-        DateOnly patientGeburtsdatum;
-
         while (true)
         {
             string eingabe = EingabeFordern("Geburtsdatum");
 
-            if (!DateOnly.TryParse(eingabe, out patientGeburtsdatum))
+            if (DateOnly.TryParse(eingabe, out DateOnly geburtsdatum))
             {
-                Console.WriteLine("Ungültiges Datumsformat oder kein Geburtsdatum angegeben.\n" +
-                    "Geben Sie bitte ein der folgenden Datumsformat an:\n" +
-                    "[dd.MM.yyy] oder [dd/MM/yyyy] oder [dd-MM-yyyy] an");
-                continue;
+                return geburtsdatum;
             }
 
-            try
-            {
-                Patient neuerPatient = new(vorname, nachname, patientGeburtsdatum, versichertennummer);
-                patientenverwaltung.Anlegen(neuerPatient);
-                Console.WriteLine("Patient wurde erfolgreich angelegt.");
-                break;
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                Console.WriteLine($"Fehler: {ex.Message}");
-                Console.WriteLine("Bitte geben Sie ein gültiges Geburtsdatum ein.");
-            }
+            Console.WriteLine(
+                "Ungültiges Datumsformat oder kein Geburtsdatum angegeben.\n" +
+                "Bitte geben Sie das Datum in einem der folgenden Formate ein:\n" +
+                "[dd.MM.yyyy] oder [dd/MM/yyyy] oder [dd-MM-yyyy]");
         }
+    }
+
+    private static string VornameFordern()
+    {
+        while (true)
+        {
+            string vorname = EingabeFordern("Vorname");
+            if (vorname.All(char.IsLetter))
+            {
+                return vorname;
+            }
+            Console.WriteLine("Der Vorname darf nur aus Buchstaben bestehen");
+        }
+    }
+    
+    private static string NachnameFordern()
+    {
+        while (true)
+        {
+            string nachname = EingabeFordern("Nachname");
+            if(nachname.All(char.IsLetter))            
+                return nachname;
+            Console.WriteLine("Der Nachname darf nur Buchstabe bestehen.");
+            
+        }
+    }
+
+    private static void PatientAnlegen(Patientenverwaltung patientenverwaltung)
+    {
+        Console.WriteLine("\n--- Patient anlegen ---");
+        string vorname = VornameFordern();
+        string nachname = NachnameFordern();
+        string versichertennummer = EingabeFordern("Versichertennummer");
+        DateOnly geburtsdatum = GeburtsdatumFordern();
+
+        try
+        {
+            Patient neuerPatient = new(
+                vorname,
+                nachname,
+                geburtsdatum,
+                versichertennummer);
+
+            patientenverwaltung.Anlegen(neuerPatient);
+
+            Console.WriteLine("Patient wurde erfolgreich angelegt.");
+        }
+        catch (ArgumentOutOfRangeException exc)
+        {
+            Console.WriteLine($"Fehler: {exc.Message}");
+        }
+        catch (ArgumentNullException exc)
+        {
+            Console.WriteLine($"Fehler: {exc.Message}");
+        }
+        catch (Exception exc)
+        {
+            Console.WriteLine($"Fehler: {exc.Message}");
+        }
+
     }
 
     private static void AllePatientenAnzeigen(Patientenverwaltung patientenverwaltung)
