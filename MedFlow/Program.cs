@@ -17,7 +17,7 @@ public class Program
             Console.WriteLine("2) Alle Patienten anzeigen");
             Console.WriteLine("0) Beenden");
             Console.WriteLine();
-            Console.WriteLine("Auswahl:");
+            Console.Write("Auswahl: ");
             string? auswahl = Console.ReadLine();
             switch (auswahl)
             {
@@ -85,11 +85,11 @@ public class Program
     {
         string[] erlaubteFormate =
         {
-            "dd.MM.yyyy", 
+            "dd.MM.yyyy",
             "dd/MM/yyyy"
         };
 
-        while(true)
+        while (true)
         {
             string geburtsdatumEingabe = EingabeFordern("Geburtsdatum");
 
@@ -104,16 +104,7 @@ public class Program
             if (istGeburtsdatumsformatRichtig)
 
                 return geburtsdatum;
-
-            Console.WriteLine("Ungültiges Geburtsdatum.\n" +
-                              $"Erlaubte Formate:" +
-                              $"{erlaubteFormate[0]}, " +
-                              $"{erlaubteFormate[1]}, " +
-                              $"Beispiele:" +
-                              $" 02.12.1986, " +
-                              $"02/12/1986");
         }
-       
     }
 
     private static void PatientAnlegen(Patientenverwaltung patientenverwaltung)
@@ -130,15 +121,22 @@ public class Program
 
         try
         {
-            Patient neuerPatient = new(
-                vorname,
-                nachname,
-                geburtsdatum,
-                versichertennummer);
+            Patient neuerPatient = new(vorname, nachname, geburtsdatum, versichertennummer);
 
-            patientenverwaltung.Anlegen(neuerPatient);
+            var istPatientRichtigErstellt = patientenverwaltung.Anlegen(neuerPatient);
+            if (istPatientRichtigErstellt)
+            {
+                Console.WriteLine("Patient wurde erfolgreich angelegt.");
 
-            Console.WriteLine("Patient wurde erfolgreich angelegt.");
+            }
+            else
+            {
+                Console.WriteLine(".........................................");
+                Console.WriteLine("... Der Patient wurde nicht angelegt! ...");
+                Console.WriteLine(".........................................");
+            }
+
+
         }
         catch (ArgumentOutOfRangeException exc)
         {
@@ -168,7 +166,7 @@ public class Program
 
         foreach (var patient in patientenverwaltung.AlleAbrufen())
         {
-            Console.WriteLine("\n"+patient);
+            Console.WriteLine("\n" + patient);
         }
     }
 }
