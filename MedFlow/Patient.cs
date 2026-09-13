@@ -17,16 +17,26 @@ public class Patient
         }
     }
 
-    public Patient(string vorname, string nachname, DateOnly geburtsdatum, string versichertennummer)
+    public Patient(string vorname,string nachname, DateOnly geburtsdatum, string versichertennummer)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(vorname);
         ArgumentException.ThrowIfNullOrWhiteSpace(nachname);
         ArgumentException.ThrowIfNullOrWhiteSpace(versichertennummer);
 
+        if (!IstGueltigerName(vorname))
+            throw new ArgumentException("Der Vorname enthält ungültige Zeichen.", nameof(vorname));
+
+        if (!IstGueltigerName(nachname))
+            throw new ArgumentException("Der Nachname enthält ungültige Zeichen.", nameof(nachname));
+
         Vorname = vorname;
         Nachname = nachname;
         Versichertennummer = versichertennummer;
         Geburtsdatum = geburtsdatum;
+    }
+    private static bool IstGueltigerName(string name)
+    {
+        return !string.IsNullOrWhiteSpace(name) && name.All(c => char.IsLetter(c) || c == ' ' || c == '-' || c == '\'');
     }
 
     private static void GeburtsdatumValidieren(DateOnly geburtsdatum)
@@ -38,6 +48,7 @@ public class Patient
             throw new ArgumentOutOfRangeException(nameof(geburtsdatum), geburtsdatum, "Das Geburtsdatum darf nicht in der Zukunft liegen.");
         }
     }
+
 
     public override string ToString()
     {

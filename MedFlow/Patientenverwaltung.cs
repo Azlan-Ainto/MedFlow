@@ -3,7 +3,7 @@
 public class Patientenverwaltung
 {
     private readonly List<Patient> _patienten = new();
-    public void Anlegen(Patient patient)
+    public bool TryAnlegen(Patient patient)
     {
         ArgumentNullException.ThrowIfNull(patient);
 
@@ -12,12 +12,21 @@ public class Patientenverwaltung
             patient.Versichertennummer,
             StringComparison.OrdinalIgnoreCase));
 
-        if (patientExistiert)
+        if (!patientExistiert)
         {
-            throw new InvalidOperationException("Ein Patient mit der Versichertennummer existiert bereits.");
+            _patienten.Add(patient);
+
         }
-        _patienten.Add(patient);
+        else
+        {
+            Console.WriteLine($"Ein Patient mit der Versichertennummer {patient.Versichertennummer} existiert bereit.");
+            return false;
+        }
+
+        return true;
     }
+
+      
     public IReadOnlyList<Patient> AlleAbrufen()
     {
         return _patienten;
