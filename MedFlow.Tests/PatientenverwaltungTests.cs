@@ -4,26 +4,6 @@ public class PatientenverwaltungTests
 {
 
     [Fact]
-    public void Anlegen_MitNull_WirftArgumentNullException()
-    {
-        var patientverwaltung = new Patientenverwaltung();
-        Assert.Throws<ArgumentNullException>(() => patientverwaltung.TryAnlegen(null!));
-
-    }
-
-    [Fact]
-    public void Anlegen_MitNeuerVersichertennummer_FuegtPatientHinzu()
-    {
-        var patientenverwaltung = new Patientenverwaltung();
-        var patient = new Patient("Max", "Min", new DateOnly(2004, 01, 01), "A123");
-        patientenverwaltung.TryAnlegen(patient);
-        var patientenListe = patientenverwaltung.AlleAbrufen();
-        Assert.Single(patientenListe);
-        Assert.Same(patient, patientenListe.First());
-    }
-
-
-    [Fact]
     public void TryAnlegen_MitNeuemPatienten_GibtTrueZurueck()
     {
         var verwaltung = new Patientenverwaltung();
@@ -40,7 +20,7 @@ public class PatientenverwaltungTests
         var ersterPatient = new Patient("Max", "Min", new DateOnly(1986, 12, 02), "A123456789");
         var zweiterPatient = new Patient("Max", "Min", new DateOnly(1986, 12, 02), "A123456789");
 
-        verwaltung.TryAnlegen(ersterPatient);
+        verwaltung.TryAnlegen(ersterPatient);   
         // 2.Act
         bool ergebnis = verwaltung.TryAnlegen(zweiterPatient);
         // 3.Asssert
@@ -56,6 +36,7 @@ public class PatientenverwaltungTests
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => verwaltung.TryAnlegen(null!));
     }
+
 
     [Fact]
     public void TryAnlegen_MitGleicherVersichertennummerAberAndererGrossschreibung_GibtFalseZurueck()

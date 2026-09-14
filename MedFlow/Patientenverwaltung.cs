@@ -12,15 +12,14 @@ public class Patientenverwaltung
             patient.Versichertennummer,
             StringComparison.OrdinalIgnoreCase));
 
-        if (!patientExistiert)
-        {
-            _patienten.Add(patient);
-
-        }
-        else
+        if (patientExistiert)
         {
             Console.WriteLine($"Ein Patient mit der Versichertennummer {patient.Versichertennummer} existiert bereit.");
             return false;
+        }
+        else
+        {
+            _patienten.Add(patient);
         }
 
         return true;
