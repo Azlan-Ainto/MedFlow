@@ -13,13 +13,13 @@ public class Patientenverwaltung
             StringComparison.OrdinalIgnoreCase));
 
         if (patientExistiert)
-        {
+        
             return false;
-        }
-        else
-        {
+        
+      
+        
             _patienten.Add(patient);
-        }
+        
 
         return true;
     }
