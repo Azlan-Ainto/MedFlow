@@ -2,6 +2,10 @@
 
 public class Program
 {
+    private const string NamensregelHinweis = 
+        "Erlaubt sind Buchstaben, Leerzeichen, Bindestrich und Apostroph.";
+
+
     static void Main(string[] args)
     {
         Patientenverwaltung patientenverwaltung = new();
@@ -39,10 +43,7 @@ public class Program
         }
     }
 
-    private static bool IstGueltigerName(string name)
-    {
-        return !string.IsNullOrWhiteSpace(name)  && name.All(c => char.IsLetter(c)  || c == ' ' || c == '-' || c == '\'');
-    }
+
 
     private static string EingabeFordern(string feldname)
     {
@@ -65,11 +66,11 @@ public class Program
         while (true)
         {
             string vorname = EingabeFordern("Vorname");
-            if (IstGueltigerName(vorname))
+            if (Patient.IstGueltigerName(vorname))
             {
                 return vorname;
             }
-            Console.WriteLine("Der Vorname darf nur aus Buchstaben bestehen");
+            Console.WriteLine(NamensregelHinweis);
         }
     }
 
@@ -78,9 +79,9 @@ public class Program
         while (true)
         {
             string nachname = EingabeFordern("Nachname");
-            if (IstGueltigerName(nachname))
+            if (Patient.IstGueltigerName(nachname))
                 return nachname;
-            Console.WriteLine("Der Nachname darf nur Buchstabe bestehen.");
+            Console.WriteLine(NamensregelHinweis);
 
         }
     }
@@ -112,12 +113,11 @@ public class Program
         }
     }
 
-    private static void PatientAnlegen(Patientenverwaltung patientenverwaltung)
-    {
+    private static void PatientAnlegen(
+        Patientenverwaltung patientenverwaltung
+    ){
 
-        Console.WriteLine("*************************");
         Console.WriteLine("*** Patient anlegen ****");
-        Console.WriteLine("**************************");
         Console.WriteLine();
         string vorname = VornameFordern();
         string nachname = NachnameFordern();
@@ -136,42 +136,30 @@ public class Program
             }
             else
             {
-                Console.WriteLine(".........................................");
+              
                 Console.WriteLine("... Der Patient wurde nicht angelegt! ...");
-                Console.WriteLine(".........................................");
             }
-
-
         }
-        catch (ArgumentOutOfRangeException exc)
+        catch (ArgumentException exc)
         {
             Console.WriteLine($"Fehler: {exc.Message}");
         }
-        catch (ArgumentNullException exc)
-        {
-            Console.WriteLine($"Fehler: {exc.Message}");
-        }
-        catch (Exception exc)
-        {
-            Console.WriteLine($"Fehler: {exc.Message}");
-        }
-
     }
 
-    private static void AllePatientenAnzeigen(Patientenverwaltung patientenverwaltung)
-    {
-        Console.WriteLine("********************************************************");
-        Console.WriteLine("*** In der Datenbank exisiteren folgende Patienten: ***");
-        Console.WriteLine("*********************************************************");
-        if (patientenverwaltung.AlleAbrufen().Count == 0)
-        {
-            Console.WriteLine("die Patientenliste ist leer.");
+    private static void AllePatientenAnzeigen(
+        Patientenverwaltung patientenverwaltung
+    ){
+       
+        var patientenliste = patientenverwaltung.AlleAbrufen();
+        if (patientenliste.Count == 0)
             return;
-        }
 
-        foreach (var patient in patientenverwaltung.AlleAbrufen())
+        Console.WriteLine("*** In der Liste existieren folgende Patienten: ***");
+        foreach (var patient in patientenliste)
         {
             Console.WriteLine("\n" + patient);
         }
+            
+        
     }
 }
