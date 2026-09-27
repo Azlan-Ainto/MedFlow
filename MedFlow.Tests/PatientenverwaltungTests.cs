@@ -13,7 +13,7 @@ public class PatientenverwaltungTests
         Assert.Single(verwaltung.AlleAbrufen());
     }
     [Fact]
-    public void TryAnlegen_Mit_Bereits_Vorhandener_Versichertennummer()
+    public void TryAnlegen_Mit_Bereits_Vorhandener_Versichertennummer_Gibt_False_Zurueck()
     {
         // 1.Arrange
         var verwaltung = new Patientenverwaltung();

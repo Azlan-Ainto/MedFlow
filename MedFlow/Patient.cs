@@ -42,7 +42,7 @@ public class Patient
             throw new ArgumentOutOfRangeException(
               nameof(geburtsdatum),
               geburtsdatum,
-               "Das Geburtsdatum darf nicht in der Zukunft sein"
+               "Das Geburtsdatum darf nicht in der Zukunft liegen."
             );
         }
         Vorname = vorname.Trim();

@@ -112,7 +112,7 @@ public class Program
                 out DateOnly geburtsdatum
              );
 
-            if ( Patient.IstGueltigesGeburtsdatum(geburtsdatum) && istGeburtsdatumsformatRichtig)
+            if (istGeburtsdatumsformatRichtig && Patient.IstGueltigesGeburtsdatum(geburtsdatum))
                 return geburtsdatum;
 
             Console.WriteLine(
