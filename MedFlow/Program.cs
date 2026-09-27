@@ -1,9 +1,14 @@
-﻿namespace MedFlow;
+﻿
+namespace MedFlow;
 
 public class Program
 {
-    private const string NamensregelHinweis = 
-        "Erlaubt sind Buchstaben, Leerzeichen, Bindestrich und Apostroph.";
+    private const string NamensregelHinweis =
+        "Erlaubt sind " +
+        "Buchstaben, " +
+        "Leerzeichen, " +
+        "Bindestrich und " +
+        "Apostroph.";
 
 
     static void Main(string[] args)
@@ -43,8 +48,6 @@ public class Program
         }
     }
 
-
-
     private static string EingabeFordern(string feldname)
     {
         string? eingabe;
@@ -56,6 +59,8 @@ public class Program
             {
                 Console.WriteLine("Die Eingabe darf nicht leer sein.");
             }
+         
+
         } while (string.IsNullOrWhiteSpace(eingabe));
 
         return eingabe;
@@ -98,6 +103,7 @@ public class Program
         {
             string geburtsdatumEingabe = EingabeFordern("Geburtsdatum");
 
+
             bool istGeburtsdatumsformatRichtig = DateOnly.TryParseExact(
                 geburtsdatumEingabe,
                 erlaubteFormate,
@@ -106,16 +112,21 @@ public class Program
                 out DateOnly geburtsdatum
              );
 
-            if (istGeburtsdatumsformatRichtig)
-
+            if ( Patient.IstGueltigesGeburtsdatum(geburtsdatum) && istGeburtsdatumsformatRichtig)
                 return geburtsdatum;
-            Console.WriteLine($"Erlaubte Formate: {erlaubteFormate[0]}, {erlaubteFormate[1]}");
+
+            Console.WriteLine(
+                $"Erlaubte Formate: " +
+                $"{erlaubteFormate[0]}, " +
+                $"{erlaubteFormate[1]}"
+            );
         }
     }
 
     private static void PatientAnlegen(
         Patientenverwaltung patientenverwaltung
-    ){
+    )
+    {
 
         Console.WriteLine("*** Patient anlegen ****");
         Console.WriteLine();
@@ -132,11 +143,9 @@ public class Program
             if (istPatientRichtigErstellt)
             {
                 Console.WriteLine("Patient wurde erfolgreich angelegt.");
-
             }
             else
             {
-              
                 Console.WriteLine("... Der Patient wurde nicht angelegt! ...");
             }
         }
@@ -148,18 +157,18 @@ public class Program
 
     private static void AllePatientenAnzeigen(
         Patientenverwaltung patientenverwaltung
-    ){
-       
+    )
+    {
+        Console.WriteLine("*** In der Liste existieren folgende Patienten: ***");
+
         var patientenliste = patientenverwaltung.AlleAbrufen();
         if (patientenliste.Count == 0)
             return;
 
-        Console.WriteLine("*** In der Liste existieren folgende Patienten: ***");
         foreach (var patient in patientenliste)
         {
             Console.WriteLine("\n" + patient);
         }
-            
-        
+
     }
 }
