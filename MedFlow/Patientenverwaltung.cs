@@ -17,13 +17,10 @@ public class Patientenverwaltung
         );
 
         if (patientExistiert)
-        {
             return false;
-        }
         _patienten.Add(patient);
         return true;
     }
-
 
     public IReadOnlyList<Patient> AlleAbrufen()
     {

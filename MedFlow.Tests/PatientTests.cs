@@ -6,9 +6,9 @@ public class PatientTests
     public void Konstruktor_Mit_Gueltigen_Daten_Setzt_Eigenschaften()
     {
         var patient = new Patient(
-            "Max", 
-            "Min", 
-            new DateOnly(1985, 3, 14), 
+            "Max",
+            "Min",
+            new DateOnly(1985, 3, 14),
             "A12"
         );
         Assert.Equal("Max", patient.Vorname);
@@ -22,8 +22,8 @@ public class PatientTests
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
-                "", 
-                "Min", 
+                "",
+                "Min",
                 new DateOnly(1985, 3, 14), "A12"));
     }
 
@@ -32,23 +32,24 @@ public class PatientTests
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
-                "Max", 
-                "Min", 
-                new DateOnly(1985, 3, 14), 
+                "Max",
+                "Min",
+                new DateOnly(1985, 3, 14),
                 ""
              )
         );
     }
 
 
-   [Fact]
+    [Fact]
     public void Konstruktor_Mit_Geburtsdatum_In_Der_Zukunft_Wirft_ArgumentOutOfRangeException()
     {
+        var geburtsdatum = DateOnly.FromDateTime(DateTime.Today).AddDays(1);
         var exception = Assert.Throws<ArgumentOutOfRangeException>(
             () => new Patient(
-                "Max", 
-                "Min", 
-                DateOnly.FromDateTime(DateTime.Today).AddDays(1), 
+                "Max",
+                "Min",
+                DateOnly.FromDateTime(DateTime.Today).AddDays(1),
                 "A12")
             );
         Assert.Equal("geburtsdatum", exception.ParamName);
@@ -59,8 +60,8 @@ public class PatientTests
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
-                "Max", 
-                "", 
+                "Max",
+                "",
                 new DateOnly(1985, 3, 14), "A12"));
     }
     [Fact]
@@ -68,9 +69,9 @@ public class PatientTests
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
-                "   ", 
-                "Min", 
-                new DateOnly(1985, 3, 14), 
+                "   ",
+                "Min",
+                new DateOnly(1985, 3, 14),
                 "A12"));
     }
 
@@ -78,11 +79,11 @@ public class PatientTests
     [InlineData("Anna-Lena")]
     [InlineData("O'Brien")]
     [InlineData("van der Berg")]
-   
-    public void Konstruktor_Mit_Gueltigem_Vornamen_LegtPatientAn(string vorname)
+
+    public void Konstruktor_Mit_Gueltigem_Vornamen_Legt_Patient_An(string vorname)
     {
-        var patient = new Patient(vorname, "Min", new DateOnly(2001,1,1), "A12344");
-       
+        var patient = new Patient(vorname, "Min", new DateOnly(2001, 1, 1), "A12344");
+
         Assert.Equal(vorname, patient.Vorname);
     }
 
@@ -100,8 +101,8 @@ public class PatientTests
         var exception = Assert.Throws<ArgumentException>(
             () => new Patient(
                 vorname,
-                "Min",                
-                new DateOnly(2001,1,1),
+                "Min",
+                new DateOnly(2001, 1, 1),
                 "A12344")
          );
 
@@ -119,9 +120,8 @@ public class PatientTests
     [InlineData("F*ax")]
     [InlineData("F_ax")]
 
-    public void Konstruktor_Mit_Ungueltigem_Nachnamen_WirftArgumentException(string nachname)
+    public void Konstruktor_Mit_Ungueltigem_Nachnamen_Wirft_ArgumentException(string nachname)
     {
-
         var exception = Assert.Throws<ArgumentException>(
             () => new Patient(
                "Max",
@@ -129,10 +129,9 @@ public class PatientTests
                 new DateOnly(2005, 5, 5),
                "A12344"));
         Assert.Equal("nachname", exception.ParamName);
-
     }
 
-    
+
     [Theory]
     [InlineData("Müller")]
     [InlineData("José")]
@@ -140,9 +139,9 @@ public class PatientTests
     [InlineData("José-Maria")]
     public void Ist_Gueltiger_Name_Mit_Sonderzeichen_Liefert_True(string name)
     {
-            bool ergebnis = Patient.IstGueltigerName(name);
+        bool ergebnis = Patient.IstGueltigerName(name);
 
-            Assert.True(ergebnis);
+        Assert.True(ergebnis);
     }
 
 
