@@ -3,7 +3,7 @@
 public class PatientTests
 {
     [Fact]
-    public void Konstruktor_MitGueltigenDaten_SetztEigenschaften()
+    public void Konstruktor_Mit_Gueltigen_Daten_Setzt_Eigenschaften()
     {
         var patient = new Patient(
             "Max", 
@@ -18,7 +18,7 @@ public class PatientTests
     }
 
     [Fact]
-    public void Konstruktor_MitLeeremVornamen_WirftArgumentException()
+    public void Konstruktor_Mit_Leerem_Vornamen_Wirft_ArgumentException()
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
@@ -28,7 +28,7 @@ public class PatientTests
     }
 
     [Fact]
-    public void Konstruktor_MitLeererVersichertennummer_WirftArgumentException()
+    public void Konstruktor_Mit_Leerer_Versichertennummer_Wirft_ArgumentException()
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
@@ -42,7 +42,7 @@ public class PatientTests
 
 
    [Fact]
-    public void Konstruktor_MitGeburtsdatumInDerZukunft_WirftArgumentOutOfRangeException()
+    public void Konstruktor_Mit_Geburtsdatum_In_Der_Zukunft_Wirft_ArgumentOutOfRangeException()
     {
         var exception = Assert.Throws<ArgumentOutOfRangeException>(
             () => new Patient(
@@ -55,7 +55,7 @@ public class PatientTests
     }
 
     [Fact]
-    public void Konstruktor_MitLeeremNachnamen_WirftArgumentException()
+    public void Konstruktor_Mit_Leerem_Nachnamen_Wirft_ArgumentException()
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
@@ -64,7 +64,7 @@ public class PatientTests
                 new DateOnly(1985, 3, 14), "A12"));
     }
     [Fact]
-    public void Konstruktor_MitNurLeerzeichenImVornamen_WirftArgumentException()
+    public void Konstruktor_Mit_Nur_Leerzeichen_Im_Vornamen_Wirft_ArgumentException()
     {
         Assert.Throws<ArgumentException>(
             () => new Patient(
